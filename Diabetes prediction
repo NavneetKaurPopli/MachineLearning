@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import LinearSVC 
+from sklearn.model_selection import train_test_split
+
+lr=LogisticRegression()
+rfc=RandomForestClassifier(n_estimators=100)
+scv=LinearSVC(C=1.0)
+
+df=pd.read_csv("diabetes.csv")
+df.columns
+df.head(10)
+df.info()
+df.shape
+
+train, test=train_test_split(df,test_size=0.2)
+train.shape
+test.shape
+trainingX=train.iloc[:,:8]
+trainingY=train["Outcome"]
+
+testingX=test.iloc[:,:8]
+testingY=test["Outcome"]
+
+lr.fit(trainingX,trainingY)
+lr.score(testingX,testingY)*100
+#score 77.9%
+
+from sklearn.metrics import confusion_matrix
+confusion_matrix(lr.predict(trainingX),trainingY)
+confusion_matrix(lr.predict(testingX),testingY)
+rfc.fit(trainingX,trainingY)
+rfc.score(trainingX,trainingY)
+rfc.score(testingX,testingY)
+confusion_matrix(rfc.predict(trainingX),trainingY)
+confusion_matrix(rfc.predict(testingX),testingY)
+scv.fit(trainingX,trainingY)
+scv.score(trainingX,trainingY)
+scv.score(testingX,testingY)
+confusion_matrix(scv.predict(trainingX),trainingY)
+confusion_matrix(scv.predict(testingX),testingY)

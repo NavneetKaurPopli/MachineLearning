@@ -1,0 +1,28 @@
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+
+df=pd.read_csv("data.csv")
+df.head(5)
+df=df.drop(columns="id")
+
+#dropping NaN
+
+df=df.dropna(axis=1)
+df.head(5)
+
+train,test=train_test_split(df,test_size=0.2)
+df.shape
+testingX=test.iloc[:,1:31]
+testingY=test["diagnosis"]
+trainingX=train.iloc[:,1:31]
+trainingY=train["diagnosis"]
+
+lr=LogisticRegression()
+lr.fit(trainingX,trainingY)
+lr.score(trainingX,trainingY)
+#95.6 score
+confusion_matrix(lr.predict(trainingX),trainingY)
+#array([[281,  11],
+ #      [  9, 154]], dtype=int64)

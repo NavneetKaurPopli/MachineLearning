@@ -13,7 +13,7 @@ print(dic)
 for val in file:
     val[4]=dic[val[4]]
     print(file)
-    trainingset=file[:100]
+trainingset=file[:100]
 testingset=file[100:]
 print(trainingset.shape)
 print(testingset.shape)
